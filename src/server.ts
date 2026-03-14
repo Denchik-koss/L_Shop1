@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
+import testRoutes from './routes/testRoutes';
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
+app.use('/api', testRoutes);
 
 app.get('/', (req, res) => {
     res.json({ message: 'Все добра' });
