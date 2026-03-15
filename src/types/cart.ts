@@ -1,3 +1,4 @@
+import { Product } from './product';
 
 export interface CartItem {
     productId: string;
@@ -8,5 +9,13 @@ export interface CartItem {
 export interface Cart {
     userId: string;
     items: CartItem[];
+    updatedAt: string;
+}
+
+export interface CartWithDetails {
+    userId: string;
+    items: (CartItem & { product: Product })[];
+    totalPrice: number;
+    totalItems: number;
     updatedAt: string;
 }

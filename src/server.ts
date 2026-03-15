@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import testRoutes from './routes/testRoutes';
 import authRoutes from './routes/authRoutes';
 import productRoutes from './routes/productRoutes';
+import cartRoutes from './routes/cartRoutes';
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ app.use(cookieParser());
 app.use('/api', testRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
-
+app.use('/api/cart', cartRoutes);
 app.get('/', (req, res) => {
     res.json({ message: 'Все добра' });
 });

@@ -3,5 +3,10 @@
     "sessionId": "e42f2ce6-c00c-4c0d-85fb-b8879ee3a738",
     "userId": "245b0ab2-0417-44da-946e-67345c37fdb2",
     "expiresAt": 1773517704800
+  },
+  {
+    "sessionId": "1b80e10c-2f85-42e6-ba51-b91ebaf02835",
+    "userId": "7b5cf0af-ad0c-4d20-bbd1-0017b3dd4dd4",
+    "expiresAt": 1773580914999
   }
 ]
