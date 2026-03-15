@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "7b5cf0af-ad0c-4d20-bbd1-0017b3dd4dd4",
+    "name": "Иванчик Петров",
+    "email": "ivan2@mail.com",
+    "login": "ivan1123",
+    "phone": "+375255321128",
+    "password": "123456",
+    "createdAt": "2026-03-14T19:40:04.958Z"
+  }
+]

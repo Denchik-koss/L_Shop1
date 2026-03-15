@@ -7,9 +7,3 @@ export interface User {
     password: string;
     createdAt: string;
 }
-
-export interface Session {
-    userId: string;
-    sessionId: string;
-    expiresAt: number;
-}
