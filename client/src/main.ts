@@ -1,6 +1,10 @@
 import { router } from './utils/router';
 import { authAPI } from './api/auth';
 import { cartAPI } from './api/cart';
+import { initMainPage } from './pages/MainPage';
+import { initAuthPage } from './pages/AuthPage';
+import { initCartPage } from './pages/CartPage';
+import './styles/main.css';
 
 export interface AppState {
     user: any | null;
@@ -63,14 +67,41 @@ function updateUI() {
 
 async function initApp() {
     router
-        .addRoute('/', () => '<h1>Главная страница (в разработке)</h1>', 'Главная')
-        .addRoute('/auth', () => '<h1>Страница авторизации (в разработке)</h1>', 'Вход / Регистрация')
-        .addRoute('/cart', () => '<h1>Корзина (в разработке)</h1>', 'Корзина')
+        .addRoute('/', async () => {
+            const { renderMainPage } = await import('./pages/MainPage');
+            return renderMainPage();
+        }, 'Главная')
+        .addRoute('/auth', async () => {
+            const { renderAuthPage } = await import('./pages/AuthPage');
+            return renderAuthPage();
+        }, 'Вход / Регистрация')
+        .addRoute('/cart', async () => {
+            const { renderCartPage } = await import('./pages/CartPage');
+            return renderCartPage();
+        }, 'Корзина')
         .addRoute('*', () => '<h1>404 - Страница не найдена</h1>');
 
     router.init();
 
+    setTimeout(() => {
+        const path = window.location.pathname;
+        if (path === '/') initMainPage();
+        else if (path === '/auth') initAuthPage();
+        else if (path === '/cart') initCartPage();
+    }, 100);
+
     await updateState();
+
+    document.getElementById('logout-btn')?.addEventListener('click', async (e) => {
+        e.preventDefault();
+        try {
+            await authAPI.logout();
+            await updateState();
+            router.navigate('/');
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    });
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
