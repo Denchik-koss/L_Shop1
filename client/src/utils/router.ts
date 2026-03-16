@@ -61,14 +61,6 @@ class Router {
         this.navigate(window.location.pathname, false);
     }
 
-    getParams(): Record<string, string> {
-        const params: Record<string, string> = {};
-        const urlParts = this.currentPath.split('/').filter(Boolean);
-        
-        
-        return params;
-    }
-
     getQueryParams(): Record<string, string> {
         const params: Record<string, string> = {};
         const queryString = window.location.search;

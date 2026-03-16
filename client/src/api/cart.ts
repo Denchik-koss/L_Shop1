@@ -24,7 +24,7 @@ class CartAPI extends ApiClient {
 
     async checkAuth(): Promise<boolean> {
         try {
-            await this.getCart();
+            await this.get('/auth/me');
             return true;
         } catch {
             return false;

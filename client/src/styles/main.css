@@ -78,7 +78,6 @@ nav a:hover {
     text-align: center;
 }
 
-/* Footer */
 footer {
     margin-top: 4rem;
     padding: 2rem 0;
@@ -107,12 +106,6 @@ footer {
 .product-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-
-.product-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
 }
 
 .product-title {
@@ -175,7 +168,6 @@ footer {
     width: 100%;
 }
 
-/* Filters */
 .filters {
     background: #fff;
     padding: 1.5rem;
@@ -265,7 +257,6 @@ footer {
     font-size: 1rem;
 }
 
-/* Cart page */
 .cart-items {
     background: #fff;
     border-radius: 8px;
@@ -275,7 +266,7 @@ footer {
 
 .cart-item {
     display: grid;
-    grid-template-columns: 100px 1fr auto auto auto;
+    grid-template-columns: 200px 120px 120px 40px;
     gap: 1rem;
     align-items: center;
     padding: 1rem;
@@ -286,15 +277,8 @@ footer {
     border-bottom: none;
 }
 
-.cart-item-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 4px;
-}
-
 .cart-item-info {
-    min-width: 200px;
+    min-width: auto;
 }
 
 .cart-item-title {
@@ -311,6 +295,7 @@ footer {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    justify-content: flex-end;
 }
 
 .btn-quantity {
@@ -336,13 +321,13 @@ footer {
 
 .cart-item-total {
     font-weight: bold;
-    min-width: 100px;
     text-align: right;
+    padding-right: 1rem;
 }
 
 .btn-remove {
-    width: 30px;
-    height: 30px;
+    width: 36px;
+    height: 36px;
     border: none;
     background: #dc3545;
     color: white;
@@ -350,6 +335,9 @@ footer {
     cursor: pointer;
     font-size: 1.2rem;
     transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-remove:hover {
@@ -411,37 +399,34 @@ footer {
 
 @media (max-width: 768px) {
     .cart-item {
-        grid-template-columns: 80px 1fr;
+        grid-template-columns: 1fr;
         grid-template-areas: 
-            "image info"
-            "image quantity"
-            "total remove";
+            "info"
+            "quantity"
+            "total"
+            "remove";
         gap: 0.5rem;
-    }
-
-    .cart-item-image {
-        grid-area: image;
-        width: 80px;
-        height: 80px;
+        text-align: center;
     }
 
     .cart-item-info {
         grid-area: info;
-        min-width: auto;
     }
 
     .cart-item-quantity {
         grid-area: quantity;
-        justify-content: flex-start;
+        justify-content: center;
     }
 
     .cart-item-total {
         grid-area: total;
-        text-align: left;
+        text-align: center;
+        padding-right: 0;
     }
 
     .btn-remove {
         grid-area: remove;
+        margin: 0 auto;
     }
 
     .filters {

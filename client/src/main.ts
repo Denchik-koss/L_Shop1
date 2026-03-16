@@ -20,15 +20,21 @@ export const state: AppState = {
 
 export async function updateState() {
     try {
-        const isAuth = await cartAPI.checkAuth();
+        const isAuth = await cartAPI.checkAuth().catch(() => false);
         state.isAuthenticated = isAuth;
         
         if (isAuth) {
-            const userData = await authAPI.getCurrentUser();
-            state.user = userData.user;
-            
-            const cart = await cartAPI.getCart();
-            state.cartItemsCount = cart.totalItems;
+            try {
+                const userData = await authAPI.getCurrentUser();
+                state.user = userData.user;
+                
+                const cart = await cartAPI.getCart();
+                state.cartItemsCount = cart.totalItems;
+            } catch (error) {
+                state.isAuthenticated = false;
+                state.user = null;
+                state.cartItemsCount = 0;
+            }
         } else {
             state.user = null;
             state.cartItemsCount = 0;
@@ -36,7 +42,10 @@ export async function updateState() {
         
         updateUI();
     } catch (error) {
-        console.error('Failed to update state:', error);
+        state.isAuthenticated = false;
+        state.user = null;
+        state.cartItemsCount = 0;
+        updateUI();
     }
 }
 
@@ -66,31 +75,32 @@ function updateUI() {
 }
 
 async function initApp() {
+    await updateState();
+
     router
         .addRoute('/', async () => {
             const { renderMainPage } = await import('./pages/MainPage');
-            return renderMainPage();
+            const html = await renderMainPage();
+            setTimeout(() => initMainPage(), 50);
+            return html;
         }, 'Главная')
         .addRoute('/auth', async () => {
             const { renderAuthPage } = await import('./pages/AuthPage');
-            return renderAuthPage();
+            const html = renderAuthPage();
+            setTimeout(() => initAuthPage(), 50);
+            return html;
         }, 'Вход / Регистрация')
         .addRoute('/cart', async () => {
             const { renderCartPage } = await import('./pages/CartPage');
-            return renderCartPage();
+            const html = await renderCartPage();
+            setTimeout(() => {
+                initCartPage();
+            }, 50);
+            return html;
         }, 'Корзина')
         .addRoute('*', () => '<h1>404 - Страница не найдена</h1>');
 
     router.init();
-
-    setTimeout(() => {
-        const path = window.location.pathname;
-        if (path === '/') initMainPage();
-        else if (path === '/auth') initAuthPage();
-        else if (path === '/cart') initCartPage();
-    }, 100);
-
-    await updateState();
 
     document.getElementById('logout-btn')?.addEventListener('click', async (e) => {
         e.preventDefault();

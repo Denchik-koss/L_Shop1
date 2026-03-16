@@ -1,5 +1,3 @@
-import { Product, ProductQueryParams, User, CartWithDetails } from '../types/index';
-
 const API_URL = 'http://localhost:3000/api';
 
 export class ApiClient {
@@ -23,7 +21,9 @@ export class ApiClient {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error || 'Ошибка запроса');
+                const error = new Error(data.error || `HTTP error ${response.status}`);
+                (error as any).status = response.status;
+                throw error;
             }
 
             return data as T;
