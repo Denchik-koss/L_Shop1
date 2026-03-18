@@ -1,5 +1,7 @@
 const API_URL = 'http://localhost:3000/api';
 
+type RequestBody = Record<string, unknown> | null;
+
 export class ApiClient {
     private async request<T>(
         endpoint: string,
@@ -22,7 +24,7 @@ export class ApiClient {
 
             if (!response.ok) {
                 const error = new Error(data.error || `HTTP error ${response.status}`);
-                (error as any).status = response.status;
+                (error as { status?: number }).status = response.status;
                 throw error;
             }
 
@@ -37,14 +39,14 @@ export class ApiClient {
         return this.request<T>(endpoint, { method: 'GET' });
     }
 
-    protected post<T>(endpoint: string, body: any): Promise<T> {
+    protected post<T>(endpoint: string, body: RequestBody): Promise<T> {
         return this.request<T>(endpoint, {
             method: 'POST',
             body: JSON.stringify(body),
         });
     }
 
-    protected put<T>(endpoint: string, body: any): Promise<T> {
+    protected put<T>(endpoint: string, body: RequestBody): Promise<T> {
         return this.request<T>(endpoint, {
             method: 'PUT',
             body: JSON.stringify(body),

@@ -4,10 +4,11 @@ import { cartAPI } from './api/cart';
 import { initMainPage } from './pages/MainPage';
 import { initAuthPage } from './pages/AuthPage';
 import { initCartPage } from './pages/CartPage';
+import { User } from './types';
 import './styles/main.css';
 
 export interface AppState {
-    user: any | null;
+    user: User | null;
     isAuthenticated: boolean;
     cartItemsCount: number;
 }
